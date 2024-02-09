@@ -78,7 +78,7 @@ provider "vault" {
 }
 
 resource "vault_consul_secret_backend" "services" {
-  path        = "consul"
+  path        = "consul-services"
   description = "Manages the Consul backend"
   address     = "${local.consul_cluster_addr}:8500"
   token       = local.consul_init_token
