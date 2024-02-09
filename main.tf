@@ -73,6 +73,7 @@ resource "consul_acl_policy" "db" {
 
 provider "vault" {
   address = "https://${local.consul_cluster_addr}:8200"
+  skip_tls_verify = true
   token = var.vault_admin_token
 }
 
