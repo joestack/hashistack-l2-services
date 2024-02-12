@@ -165,7 +165,7 @@ path "secret/*"
 }
 
 # List, create, update, and delete consul secrets
-path "consul/*"
+path "consul-services/*"
 {
   capabilities = ["create", "read", "update", "delete", "list", "sudo"]
 }
