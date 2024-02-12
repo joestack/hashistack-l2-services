@@ -103,3 +103,84 @@ resource "vault_consul_secret_backend_role" "services" {
 //    user/password instead
 // Vault policy assigned to Consul auth with access to Vault role
 
+resource "vault_auth_backend" "userpass" {
+  type = "userpass"
+}
+
+resource "vault_generic_endpoint" "adm-user" {
+  depends_on           = [vault_auth_backend.userpass]
+  path                 = "auth/userpass/users/${var.vault_adm_user}"
+  ignore_absent_fields = true
+
+    data_json = data.template_file.user.rendered
+}
+
+data "template_file" "user" {
+  template = file("${path.root}/templates/user.tpl")
+  vars = {
+    policy = vault_policy.consul_svc.name
+    password = var.vault_adm_password
+  }
+}
+
+resource "vault_policy" "consul_svc" {
+  name = "consul-svc"
+
+  policy = <<EOT
+
+# Allow managing leases
+path "sys/leases/*"
+{
+  capabilities = ["create", "read", "update", "delete", "list", "sudo"]
+}
+
+# Manage auth backends broadly across Vault
+path "auth/*"
+{
+  capabilities = ["create", "read", "update", "delete", "list", "sudo"]
+}
+
+# List, create, update, and delete auth backends
+path "sys/auth/*"
+{
+  capabilities = ["create", "read", "update", "delete", "sudo"]
+}
+
+# List existing policies
+path "sys/policies"
+{
+  capabilities = ["read"]
+}
+
+# Create and manage ACL policies broadly across Vault
+path "sys/policies/*"
+{
+  capabilities = ["create", "read", "update", "delete", "list", "sudo"]
+}
+
+# List, create, update, and delete key/value secrets
+path "secret/*"
+{
+  capabilities = ["create", "read", "update", "delete", "list", "sudo"]
+}
+
+# Manage and manage secret backends broadly across Vault.
+path "sys/mounts/*"
+{
+  capabilities = ["create", "read", "update", "delete", "list", "sudo"]
+}
+
+# List existing secret engines.
+path "sys/mounts"
+{
+  capabilities = ["read"]
+}
+
+# Read health checks
+path "sys/health"
+{
+  capabilities = ["read", "sudo"]
+}
+
+EOT
+}
