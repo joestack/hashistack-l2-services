@@ -109,7 +109,7 @@ resource "vault_auth_backend" "userpass" {
 
 resource "vault_generic_endpoint" "adm-user" {
   depends_on           = [vault_auth_backend.userpass]
-  path                 = "auth/userpass/users/${var.vault_adm_user}"
+  path                 = "auth/userpass/users/${var.vault_user}"
   ignore_absent_fields = true
 
     data_json = data.template_file.user.rendered
@@ -119,7 +119,7 @@ data "template_file" "user" {
   template = file("${path.root}/templates/user.tpl")
   vars = {
     policy = vault_policy.consul_svc.name
-    password = var.vault_adm_password
+    password = var.vault_user_pw
   }
 }
 

@@ -12,10 +12,10 @@ variable "vault_admin_token" {
   description = "token to be used for provider authentication"
 }
 
-variable "vault_adm_user" {
+variable "vault_user" {
   description = "Additinal non-root Username to access Vault"
 }
 
-variable "vault_adm_password" {
+variable "vault_user_pw" {
   description = "non-root Password to access Vault"
 }
