@@ -77,6 +77,7 @@ provider "vault" {
   token = var.vault_admin_token
 }
 
+// Create the secrets_backend Consul
 resource "vault_consul_secret_backend" "services" {
   path        = "consul-services"
   description = "Manages the Consul backend"
@@ -84,7 +85,8 @@ resource "vault_consul_secret_backend" "services" {
   token       = local.consul_init_token
 }
 
-resource "vault_consul_secret_backend_role" "example" {
+// Create a Vault role tied to consul policies
+resource "vault_consul_secret_backend_role" "services" {
     depends_on = [ consul_acl_policy.db, consul_acl_policy.web ]
 
   name    = "services-role"
@@ -95,3 +97,9 @@ resource "vault_consul_secret_backend_role" "example" {
     "web-services"
   ]
 }
+
+// Vault auth_engine for Consul agents to be authenticated
+//    auth-aws is not possible due to doormat restrictions
+//    user/password instead
+// Vault policy assigned to Consul auth with access to Vault role
+
