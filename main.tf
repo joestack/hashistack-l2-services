@@ -123,6 +123,25 @@ data "template_file" "user" {
   }
 }
 
+// same aproach as user/pass but as token to provide access to consul_secret_backend via vault agent on each workload node
+
+resource "vault_token" "consul_agent" {
+  role_name = "consul-token"
+
+  policies = ["consul-svc"]
+
+  renewable = true
+  ttl = "24h"
+
+  renew_min_lease = 43200
+  renew_increment = 86400
+
+  metadata = {
+    "purpose" = "consul-agent"
+  }
+}
+
+
 resource "vault_policy" "consul_svc" {
   name = "consul-svc"
 
