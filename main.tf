@@ -32,10 +32,10 @@ resource "consul_acl_policy" "web" {
         policy = "write"
     }
     node_prefix "" {
-        policy = "read"
+        policy = "write"
     }
     service_prefix "" {
-        policy = "read"
+        policy = "write"
     }
     RULE
 }
@@ -48,10 +48,10 @@ resource "consul_acl_policy" "db" {
         policy = "write"
     }
     node_prefix "" {
-        policy = "read"
+        policy = "write"
     }
     service_prefix "" {
-        policy = "read"
+        policy = "write"
     }
     RULE
 }
