@@ -126,7 +126,7 @@ data "template_file" "user" {
 // same aproach as user/pass but as token to provide access to consul_secret_backend via vault agent on each workload node
 
 resource "vault_token" "consul_agent" {
-  role_name = "services-role"
+  #role_name = "services-role"
 
   policies = ["consul-svc"]
 
