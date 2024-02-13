@@ -8,4 +8,5 @@ output "vault_user_pw" {
 
 output "consul_secrets_token" {
   value = vault_token.consul_agent.client_token
+  sensitive = true
 }
