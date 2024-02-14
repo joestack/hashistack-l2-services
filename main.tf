@@ -14,6 +14,7 @@ locals {
   consul_cluster_addr    = data.terraform_remote_state.hcp.outputs.cluster_url
   consul_datacenter      = data.terraform_remote_state.hcp.outputs.consul_datacenter
   consul_init_token      = data.terraform_remote_state.hcp.outputs.consul_init_token
+  vault_admin_token      = data.terraform_remote_state.hcp.outputs.vault_admin_token
 }
 
 
@@ -74,7 +75,7 @@ resource "consul_acl_policy" "db" {
 provider "vault" {
   address = "https://${local.consul_cluster_addr}:8200"
   skip_tls_verify = true
-  token = var.vault_admin_token
+  token = local.vault_admin_token
 }
 
 // Create the secrets_backend Consul

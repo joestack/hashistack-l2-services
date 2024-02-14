@@ -8,9 +8,9 @@ variable "rs_platform_hcp" {
   default = "tfc-aws-hashistack"
 }
 
-variable "vault_admin_token" {
-  description = "token to be used for provider authentication"
-}
+# variable "vault_admin_token" {
+#   description = "token to be used for provider authentication"
+# }
 
 variable "vault_user" {
   description = "Additinal non-root Username to access Vault"
