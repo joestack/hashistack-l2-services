@@ -104,25 +104,25 @@ resource "vault_consul_secret_backend_role" "services" {
 //    user/password instead
 // Vault policy assigned to Consul auth with access to Vault role
 
-resource "vault_auth_backend" "userpass" {
-  type = "userpass"
-}
+# resource "vault_auth_backend" "userpass" {
+#   type = "userpass"
+# }
 
-resource "vault_generic_endpoint" "adm-user" {
-  depends_on           = [vault_auth_backend.userpass]
-  path                 = "auth/userpass/users/${var.vault_user}"
-  ignore_absent_fields = true
+# resource "vault_generic_endpoint" "adm-user" {
+#   depends_on           = [vault_auth_backend.userpass]
+#   path                 = "auth/userpass/users/${var.vault_user}"
+#   ignore_absent_fields = true
 
-    data_json = data.template_file.user.rendered
-}
+#     data_json = data.template_file.user.rendered
+# }
 
-data "template_file" "user" {
-  template = file("${path.root}/templates/user.tpl")
-  vars = {
-    policy = vault_policy.consul_svc.name
-    password = var.vault_user_pw
-  }
-}
+# data "template_file" "user" {
+#   template = file("${path.root}/templates/user.tpl")
+#   vars = {
+#     policy = vault_policy.consul_svc.name
+#     password = var.vault_user_pw
+#   }
+# }
 
 // same aproach as user/pass but as token to provide access to consul_secret_backend via vault agent on each workload node
 
@@ -131,15 +131,15 @@ resource "vault_token" "vault_agent" {
 
   policies = [vault_policy.consul_svc.name]
 
-  renewable = true
-  ttl = "24h"
+  # renewable = true
+  # ttl = "24h"
 
-  renew_min_lease = 43200
-  renew_increment = 86400
+  # renew_min_lease = 43200
+  # renew_increment = 86400
 
-  metadata = {
-    "purpose" = "vault-agent"
-  }
+  # metadata = {
+  #   "purpose" = "vault-agent"
+  # }
 }
 
 
