@@ -209,5 +209,13 @@ path "sys/health"
   capabilities = ["read", "sudo"]
 }
 
+path "auth/token/lookup-accessor" {
+  capabilities = ["update"]
+}
+
+path "auth/token/revoke-accessor" {
+  capabilities = ["update"]
+}
+
 EOT
 }
