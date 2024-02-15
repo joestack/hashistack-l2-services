@@ -14,7 +14,7 @@ locals {
   consul_cluster_addr    = data.terraform_remote_state.hcp.outputs.cluster_url
   consul_datacenter      = data.terraform_remote_state.hcp.outputs.consul_datacenter
   consul_init_token      = data.terraform_remote_state.hcp.outputs.consul_init_token
-  vault_admin_token      = data.terraform_remote_state.hcp.outputs.vault_admin_token
+  vault_admin_token      = var.root_token
 }
 
 
