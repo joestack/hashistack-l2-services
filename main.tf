@@ -129,7 +129,7 @@ data "template_file" "user" {
 resource "vault_token" "vault_agent" {
   #role_name = "services-role"
 
-  policies = ["consul-svc"]
+  policies = [vault_policy.consul_svc.name]
 
   renewable = true
   ttl = "24h"
