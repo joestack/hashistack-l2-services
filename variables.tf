@@ -1,11 +1,11 @@
-variable "tfc_state_org" {
-  description = "TFC Organization where to access remote_state from"
+variable "remote_state_org" {
+  description = "Terraform Organization where to access remote_state from"
   default = "JoeStack"
 }
 
-variable "rs_platform_hcp" {
-  description = "TFC Workspace where to consume outputs from (cluster_url)"
-  default = "tfc-aws-hashistack"
+variable "remote_state_l1" {
+  description = "TFC Workspace where to consume Layer1 platform outputs from (i.e. cluster_url)"
+  default = "hashistack-l1-platform"
 }
 
 variable "root_token" {
