@@ -131,8 +131,8 @@ resource "vault_token" "vault_agent" {
 
   policies = [vault_policy.consul_svc.name]
 
-  # renewable = true
-  # ttl = "24h"
+  renewable = true
+  ttl = "24h"
 
   # renew_min_lease = 43200
   # renew_increment = 86400
