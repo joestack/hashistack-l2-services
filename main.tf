@@ -32,7 +32,7 @@ resource "consul_acl_policy" "web" {
     node_prefix "web-" {
         policy = "write"
     }
-     service_prefix "" {
+     service_prefix "web-" {
         policy = "write"
     }
     RULE
@@ -45,7 +45,7 @@ resource "consul_acl_policy" "db" {
     node_prefix "db-" {
         policy = "write"
     }
-    service_prefix "" {
+    service_prefix "db-" {
         policy = "write"
     }
     RULE
