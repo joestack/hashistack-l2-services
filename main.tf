@@ -29,13 +29,10 @@ provider "consul" {
 resource "consul_acl_policy" "web" {
   name  = "web-services"
   rules = <<-RULE
-    node_prefix "webnode-" {
+    node_prefix "web-" {
         policy = "write"
     }
-    node_prefix "" {
-        policy = "write"
-    }
-    service_prefix "" {
+     service_prefix "" {
         policy = "write"
     }
     RULE
@@ -45,10 +42,7 @@ resource "consul_acl_policy" "web" {
 resource "consul_acl_policy" "db" {
   name  = "db-services"
   rules = <<-RULE
-    node_prefix "dbnode-" {
-        policy = "write"
-    }
-    node_prefix "" {
+    node_prefix "db-" {
         policy = "write"
     }
     service_prefix "" {
@@ -57,19 +51,6 @@ resource "consul_acl_policy" "db" {
     RULE
 }
 
-
-
-# resource "consul_acl_token" "web" {
-#   description = "web-services token"
-#   policies    = [consul_acl_policy.web.name]
-#   local       = true
-# }
-
-# resource "consul_acl_token" "db" {
-#   description = "db-services token"
-#   policies    = [consul_acl_policy.db.name]
-#   local       = true
-# }
 
 
 provider "vault" {
