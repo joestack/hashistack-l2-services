@@ -11,12 +11,7 @@ output "vault_agent_token" {
   sensitive = true
 }
 
-output "vault_token" {
+output "vault_root_token" {
   value = var.root_token
   sensitive = true
 }
-
-# output "vault_agent_token" {
-#   value = var.root_token
-#   sensitive = true
-# }
