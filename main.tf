@@ -1,4 +1,4 @@
-data "terraform_remote_state" "hcp" {
+data "terraform_remote_state" "l1" {
   backend = "remote"
 
   config = {
@@ -11,9 +11,9 @@ data "terraform_remote_state" "hcp" {
 
 
 locals {
-  consul_cluster_addr    = data.terraform_remote_state.hcp.outputs.cluster_url
-  consul_datacenter      = data.terraform_remote_state.hcp.outputs.consul_datacenter
-  consul_init_token      = data.terraform_remote_state.hcp.outputs.consul_init_token
+  consul_cluster_addr    = data.terraform_remote_state.l1.outputs.cluster_url
+  consul_datacenter      = data.terraform_remote_state.l1.outputs.consul_datacenter
+  consul_init_token      = data.terraform_remote_state.l1.outputs.consul_init_token
   vault_admin_token      = var.root_token
 }
 
@@ -61,7 +61,7 @@ provider "vault" {
 
 // Create the secrets_backend Consul
 resource "vault_consul_secret_backend" "services" {
-  path        = "consul-services"
+  path        = "consul"
   description = "Manages the Consul backend"
   address     = "${local.consul_cluster_addr}:8500"
   token       = local.consul_init_token
@@ -166,7 +166,7 @@ path "secret/*"
 }
 
 # List, create, update, and delete consul secrets
-path "consul-services/*"
+path "consul/*"
 {
   capabilities = ["create", "read", "update", "delete", "list", "sudo"]
 }
